@@ -1,0 +1,8 @@
+*.DS_Store
+*.pyc
+.idea
+.idea/*
+*.egg-info
+build
+dist
+grafeo/__pycache__
