@@ -3,6 +3,23 @@ import requests
 from requests.exceptions import RequestException
 from grafeo.core import Product, Producer
 from grafeo.crypto import check_pub_key
+from PIL import Image
+import zbarlight
+
+
+def _qrcode_to_pub_key(img: Image) -> str:
+    codes = zbarlight.scan_codes('qrcode', img)  # type: str
+
+    if len(codes) != 1:
+        return ""
+
+    pub_key = codes[0].decode('ascii')
+
+    if check_pub_key(pub_key):
+        return pub_key
+    else:
+        return ''
+
 
 class RemoteDB():
     """Connection to a remote database"""
@@ -34,6 +51,16 @@ class RemoteDB():
 
         return producer
 
+    def get_producer_qrcode(self, img: Image) -> Any:
+        _pub_key = _qrcode_to_pub_key(img)  # type: str
+        print("_pub_key = {}".format(_pub_key))
+        if _pub_key:
+            _producer = self.get_producer(_pub_key)
+            if _producer:
+                return _producer
+
+        return None
+
     def get_product(self, pub_key: str) -> Any:
         if not check_pub_key(pub_key):
             return None
@@ -53,3 +80,12 @@ class RemoteDB():
 
         return product
 
+    def get_product_qrcode(self, img: Image) -> Any:
+        _pub_key = _qrcode_to_pub_key(img)  # type: str
+        print("product _pub_key = {}".format(_pub_key))
+        if _pub_key:
+            _product = self.get_product(_pub_key)
+            if _product:
+                return _product
+
+        return None
