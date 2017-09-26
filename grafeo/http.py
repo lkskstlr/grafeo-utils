@@ -10,7 +10,9 @@ import zbarlight
 def _qrcode_to_pub_key(img: Image) -> str:
     codes = zbarlight.scan_codes('qrcode', img)  # type: str
 
-    if len(codes) != 1:
+    print("codes = {}".format(codes))
+
+    if not codes or len(codes) != 1:
         return ""
 
     pub_key = codes[0].decode('ascii')
