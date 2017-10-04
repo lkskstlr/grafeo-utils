@@ -9,21 +9,34 @@ from grafeo.crypto import (
     sign_message,
     check_priv_key
 )
+import warnings
+from jinja2 import Environment, PackageLoader, select_autoescape
+from weasyprint import HTML
+import qrcode
+import os
+import webbrowser
+import base64
+from io import BytesIO
 
 
 class Producer:
     """Model of a Producer"""
 
     def __init__(self,
-                 pub_key: str,
-                 version_major: int,
-                 version_minor: int,
-                 version_patch: int,
-                 name: str,
-                 signature: str):
+                 pub_key: str = '',
+                 version_major: int = current_version.major,
+                 version_minor: int = current_version.minor,
+                 version_patch: int = current_version.patch,
+                 name: str = '',
+                 signature: str = ''):
         """Initialize the data for the producer"""
 
-        self.pub_key = pub_key  # type: str
+        if not pub_key:
+            self.generate_key_pair()
+        else:
+            self.pub_key = pub_key  # type: str
+            self.priv_key = ''
+
         self.version = Version(
             major=version_major,
             minor=version_minor,
@@ -35,8 +48,45 @@ class Producer:
     def __str__(self) -> str:
         return "Producer: " + self.name
 
+
+    def generate_key_pair(self):
+        """Generates a public, private key pair for the producer"""
+        _pair = generate_key_pair()  # type: Dict[str, str]
+
+        self.pub_key = _pair['pub_key']
+        self.priv_key = _pair['priv_key']
+
+    def generate_signature(self):
+        if not check_priv_key(self.priv_key):
+            warnings.warn('This producer has no valid private key and can thus not generate a signature.')
+            return
+
+        _payload = self.payload()  # type: str
+
+        if not _payload:
+            warnings.warn('No valid payload.')
+            return
+
+        _signature = sign_message(priv_key=self.priv_key, message=_payload)  # type: str
+
+        # Fill Signature
+        self.signature = _signature
+
+        if not self.is_valid():
+            warnings.warn('The created signature was not valid')
+            self.signature = ''
+            return
+
     def payload(self) -> str:
         """Returns the payload associated with a producer"""
+
+        if not check_pub_key(self.pub_key):
+            warnings.warn('Producer has no valid public key.')
+            return ''
+
+        if not (self.name and check_utf8_string(self.name)):
+            warnings.warn('Producer has no valid name')
+            return ''
 
         return separators.field.join([
             self.pub_key,
@@ -81,6 +131,35 @@ class Producer:
             # If anything goes wrong this is not valid
             return False
 
+    def _qrcode(self):
+        qr = qrcode.QRCode(
+            error_correction=qrcode.constants.ERROR_CORRECT_H
+        )
+        qr.add_data(self.pub_key)
+        qr.make(fit=True)
+
+        return qr.make_image()
+
+    def create_pdf(self, savepath):
+        env = Environment(
+            loader=PackageLoader('grafeo'),
+            autoescape=select_autoescape(['html'])
+        )
+        template = env.get_template("producer.html")
+
+        #image
+        _img = self._qrcode()
+        buffer = BytesIO() # convert to base64 to embed directly in html
+        _img.save(buffer, format='JPEG')
+        _img_str = base64.b64encode(buffer.getvalue()).decode('ascii')
+
+        template_vars = {
+            'producer': self,
+            'qrcode_base64': _img_str
+        }
+
+        html_out = template.render(template_vars)
+        HTML(string=html_out).write_pdf(savepath)
 
 """Local type to handle heterogeneous dictionary return types (not implemented in typing right now)"""
 _ProducerAndKey = NamedTuple('_ProducerAndKey', [('producer', Producer), ('priv_key', str)])
@@ -127,16 +206,16 @@ class Product:
     """Database Model of a Product"""
 
     def __init__(self,
-                 pub_key: str,
-                 version_major: int,
-                 version_minor: int,
-                 version_patch: int,
-                 name: str,
-                 producer_pub_key: str,
-                 input_pub_keys: List[str],
-                 product_signature: str,
-                 producer_signature: str,
-                 input_signatures: List[str]):
+                 pub_key: str = '',
+                 version_major: int = current_version.major,
+                 version_minor: int = current_version.minor,
+                 version_patch: int = current_version.patch,
+                 name: str = '',
+                 producer_pub_key: str = '',
+                 input_pub_keys: List[str] = None,
+                 product_signature: str = '',
+                 producer_signature: str = '',
+                 input_signatures: List[str] = None):
 
         self.pub_key = pub_key  # type: str
         self.version = Version(
@@ -153,6 +232,34 @@ class Product:
 
     def __str__(self) -> str:
         return "Product: " + self.name
+
+    def generate_key_pair(self):
+        """Generates a public, private key pair for the product"""
+        _pair = generate_key_pair()  # type: Dict[str, str]
+
+        self.pub_key = _pair['pub_key']
+        self.priv_key = _pair['priv_key']
+
+    def generate_signature(self):
+        if not check_priv_key(self.priv_key):
+            warnings.warn('This producer has no valid private key and can thus not generate a signature.')
+            return
+
+        _payload = self.payload()  # type: str
+
+        if not _payload:
+            warnings.warn('No valid payload.')
+            return
+
+        _signature = sign_message(priv_key=self.priv_key, message=_payload)  # type: str
+
+        # Fill Signature
+        self.signature = _signature
+
+        if not self.is_valid():
+            warnings.warn('The created signature was not valid')
+            self.signature = ''
+            return
 
     def payload(self) -> str:
         """Returns the payload associated with this product"""

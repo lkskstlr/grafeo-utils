@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Producer Specification Sheet for {{producer.name}}</title>
+</head>
+<body>
+<h1>Producer Specification Sheet for {{producer.name}}</h1>
+<table>
+    <tr>  <td>ID</td>  <td>{{producer.pub_key}}</td>  </tr>
+    <tr>  <td>Name</td>  <td>{{producer.name}}</td>  </tr>
+    <tr>  <td>Version</td>  <td>
+        {{producer.version.major}}.{{producer.version.minor}}.{{producer.version.patch}}
+    </td>  </tr>
+</table>
+<img src="data:image/jpeg;base64,{{qrcode_base64 | safe}}">
+</body>
+</html>
