@@ -1,0 +1,23 @@
+site_name: Grafeo Python Utils
+site_description: Grafeo - Cryptographically authenticated supply chain database
+
+# Nicer theme: http://www.mkdocs.org/user-guide/styling-your-docs/
+theme: readthedocs
+
+# To enable Latex Like Synatx: https://stackoverflow.com/questions/27882261/mkdocs-and-mathjax
+extra_javascript: 
+    - https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML
+
+markdown_extensions:
+    - mdx_math
+
+
+pages:
+- Home: index.md
+- Tutorial: 'short_tutorial.md'
+- Reference:
+  - 'Producer and Product': 'reference/producer_and_product.md'
+
+
+
+

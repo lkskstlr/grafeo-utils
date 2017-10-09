@@ -3,8 +3,7 @@ import nacl.encoding
 import nacl.exceptions
 
 from typing import Dict
-
-from grafeo.base import version_to_str, Version, current_version, separators
+from .common import separators
 
 
 def _check_string(s: str) -> bool:

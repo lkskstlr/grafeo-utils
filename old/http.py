@@ -1,10 +1,12 @@
 from typing import Any
+
 import requests
-from requests.exceptions import RequestException
-from grafeo.core import Product, Producer
-from grafeo.crypto import check_pub_key
-from PIL import Image
 import zbarlight
+from PIL import Image
+from requests.exceptions import RequestException
+
+from grafeo2.crypto import check_pub_key
+from old.core import Product, Producer
 
 
 def _qrcode_to_pub_key(img: Image) -> str:

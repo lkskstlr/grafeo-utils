@@ -1,7 +1,7 @@
 from setuptools import setup
 
-setup(name="Grafeo: Cryptographically secured supply chain database",
-      version="0.4.1",
-      packages=["grafeo"],
-      package_data={'grafeo': ['templates/*.html']}
+setup(name="Grafeo2",
+      version="0.1.4",
+      packages=["grafeo2"],
+      package_data={'grafeo2': ['templates/*.html']}
 )

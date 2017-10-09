@@ -1,6 +1,14 @@
+import base64
+import json
+import warnings
+from io import BytesIO
 from typing import NamedTuple, List, Dict, Any
-from grafeo.base import version_to_str, Version, current_version, separators
-from grafeo.crypto import (
+
+import qrcode
+from jinja2 import Environment, PackageLoader, select_autoescape
+from weasyprint import HTML
+
+from grafeo2.crypto import (
     check_pub_key,
     check_utf8_string,
     check_signature,
@@ -9,21 +17,28 @@ from grafeo.crypto import (
     sign_message,
     check_priv_key
 )
-import warnings
-from jinja2 import Environment, PackageLoader, select_autoescape
-from weasyprint import HTML
-import qrcode
-import os
-import webbrowser
-import base64
-from io import BytesIO
-import json
+from old.base import version_to_str, Version, current_version, separators
 
 
 class Producer (json.JSONEncoder):
     """Model of a Producer"""
 
-    def __init__(self,
+
+
+    def __str__(self) -> str:
+        return "Producer: " + self.name
+
+    def default(self, obj):
+        if not obj.is_valid():
+            return None
+
+        return {
+            'pub_key': obj.pub_key,
+            'version_major': obj.version.major,
+            'version_minor': obj.version.minor,
+            'version_patch': obj.version.patch,
+            'name': obj.name,
+            'signature': obj.signaturedef __init__(self,
                  pub_key: str = '',
                  version_major: int = current_version.major,
                  version_minor: int = current_version.minor,
@@ -47,21 +62,6 @@ class Producer (json.JSONEncoder):
         )  # type: Version
         self.name = name  # type: str
         self.signature = signature  # type: str
-
-    def __str__(self) -> str:
-        return "Producer: " + self.name
-
-    def default(self, obj):
-        if not obj.is_valid():
-            return None
-
-        return {
-            'pub_key': obj.pub_key,
-            'version_major': obj.version.major,
-            'version_minor': obj.version.minor,
-            'version_patch': obj.version.patch,
-            'name': obj.name,
-            'signature': obj.signature
         }
 
     def generate_key_pair(self):
