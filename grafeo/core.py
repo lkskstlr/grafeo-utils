@@ -17,9 +17,10 @@ import os
 import webbrowser
 import base64
 from io import BytesIO
+import json
 
 
-class Producer:
+class Producer (json.JSONEncoder):
     """Model of a Producer"""
 
     def __init__(self,
@@ -30,6 +31,8 @@ class Producer:
                  name: str = '',
                  signature: str = ''):
         """Initialize the data for the producer"""
+
+        json.JSONEncoder.__init__(self)
 
         if not pub_key:
             self.generate_key_pair()
@@ -48,6 +51,18 @@ class Producer:
     def __str__(self) -> str:
         return "Producer: " + self.name
 
+    def default(self, obj):
+        if not obj.is_valid():
+            return None
+
+        return {
+            'pub_key': obj.pub_key,
+            'version_major': obj.version.major,
+            'version_minor': obj.version.minor,
+            'version_patch': obj.version.patch,
+            'name': obj.name,
+            'signature': obj.signature
+        }
 
     def generate_key_pair(self):
         """Generates a public, private key pair for the producer"""

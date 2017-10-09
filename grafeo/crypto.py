@@ -2,7 +2,7 @@ import nacl.signing
 import nacl.encoding
 import nacl.exceptions
 
-from typing import NamedTuple, Dict
+from typing import Dict
 
 from grafeo.base import version_to_str, Version, current_version, separators
 

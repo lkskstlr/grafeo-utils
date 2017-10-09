@@ -91,3 +91,17 @@ class RemoteDB():
                 return _product
 
         return None
+
+    def post_producer(self, producer: Producer) -> bool:
+        if not producer.is_valid():
+            return False
+
+        try:
+            _r = requests.post(
+                self.url + "/api/product/" + producer.pub_key + ".json",
+                               )
+        except RequestException:
+            return False
+
+        return True
+
