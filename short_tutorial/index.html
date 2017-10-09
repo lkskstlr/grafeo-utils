@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Tutorial - Grafeo Python Utils</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Tutorial";
+    var mkdocs_page_input_path = "short_tutorial.md";
+    var mkdocs_page_url = "/short_tutorial/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Grafeo Python Utils</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="./">Tutorial</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#quick-tutorial">Quick Tutorial</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#creation">Creation</a></li>
+        
+            <li><a class="toctree-l3" href="#requesting-the-information-for-a-producer-product">Requesting the information for a Producer &amp; Product</a></li>
+        
+            <li><a class="toctree-l3" href="#saving-producers-products-locally">Saving Producers &amp; Products locally</a></li>
+        
+            <li><a class="toctree-l3" href="#retrieving-producers-products-locally">Retrieving Producers &amp; Products locally</a></li>
+        
+        </ul>
+    
+
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Reference</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../reference/producer_and_product/">Producer and Product</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Grafeo Python Utils</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Tutorial</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="quick-tutorial">Quick Tutorial</h1>
+<p>This tutorial will show you the basics of using the grafeo utils.
+We first create a bunch of producers and products and post them to a remote database.</p>
+<h2 id="creation">Creation</h2>
+<pre><code class="python">import grafeo2 as grafeo
+
+
+# Connect to a remote database, i.e. a database which uses the specific http based protocol
+# Here we use a locally running django dev server
+db = grafeo.RemoteDB(url='http://localhost:8000')
+
+# Generate producers
+# Those contain the private keys and are already signed
+basf = grafeo.Producer(name=&quot;BASF&quot;)
+grain_farmer = grafeo.Producer(name=&quot;Grain Farmer&quot;)
+feed_producer = grafeo.Producer(name=&quot;Chicken Feed Producer&quot;)
+chicken_farmer = grafeo.Producer(name=&quot;Chicken Farmer&quot;)
+noodle_producer = grafeo.Producer(name=&quot;Noodle Producer&quot;)
+
+# Post all to database
+# If True is returned, the post request was successful
+assert db.post(basf)
+assert db.post(grain_farmer)
+assert db.post(feed_producer)
+assert db.post(chicken_farmer)
+assert db.post(noodle_producer)
+
+
+# Generate Products
+
+# Produced by BASF
+vitamins = grafeo.Product(
+    name=&quot;Vitamins&quot;,
+    producer_pub_key=basf.pub_key
+)
+# The producer has to also sign the product
+# No inputs were used
+vitamins.sign(
+    producer_priv_key=basf.priv_key,
+    input_priv_keys=[]
+)
+
+# Product by the grain farmer
+grain = grafeo.Product(
+    name=&quot;Grain&quot;,
+    producer_pub_key=grain_farmer.pub_key
+)
+grain.sign(
+    producer_priv_key=grain_farmer.priv_key,
+    input_priv_keys=[]
+)
+
+# Product by the feed producer. Uses vitamins and grains
+# Here we use inputs
+chicken_feed = grafeo.Product(
+    name=&quot;Chicken Feed&quot;,
+    producer_pub_key=feed_producer.pub_key,
+    input_pub_keys=[
+        vitamins.pub_key,
+        grain.pub_key
+    ]
+)
+# Producer, and inputs have to sign
+chicken_feed.sign(
+    producer_priv_key=feed_producer.priv_key,
+    input_priv_keys=[
+        vitamins.priv_key,
+        grain.priv_key
+    ]
+)
+
+# Can be done with helper (signing is included)
+eggs = grafeo.new_product(
+    name=&quot;Eggs&quot;,
+    producer=chicken_farmer,
+    inputs=[chicken_feed]
+)
+
+
+# Post all to database
+assert db.post(vitamins)
+assert db.post(grain)
+assert db.post(chicken_feed)
+assert db.post(eggs)
+
+
+# The following is even shorter
+assert db.post_product(
+    name=&quot;Egg Noodles&quot;,
+    producer=noodle_producer,
+    inputs=[eggs]
+)
+</code></pre>
+
+<h2 id="requesting-the-information-for-a-producer-product">Requesting the information for a Producer &amp; Product</h2>
+<p>All information about a producer defined by the public key can be accessed as follows:</p>
+<pre><code class="python">_producer = db.get_producer(pub_key=basf.pub_key)
+_product = db.get_product(pub_key=vitamins.pub_key)
+
+assert _producer.is_valid()
+assert _product.is_valid()
+</code></pre>
+
+<h2 id="saving-producers-products-locally">Saving Producers &amp; Products locally</h2>
+<p>The <code>LocalDB</code> class allows saving producers &amp; products locally. This includes their <span style="color:red"><strong>private keys</strong></span> and thus the resulting file must be kept <span style="color:red"><strong>secret</strong></span>!
+Also the implementation is currently <span style="color:red"><strong>not at all</strong></span> thread safe. Use the database from one, and only one, program at a time!</p>
+<pre><code class="python"># Local Database (describe folder to store data in. This must be a secure location!)
+ldb = grafeo.LocalDB(folderpath=&quot;/Users/lukas&quot;)
+
+assert ldb.post(basf)
+assert ldb.post(grain_farmer)
+assert ldb.post(feed_producer)
+assert ldb.post(chicken_farmer)
+assert ldb.post(noodle_producer)
+
+assert ldb.post(vitamins)
+assert ldb.post(grain)
+assert ldb.post(chicken_feed)
+assert ldb.post(eggs)
+assert ldb.post(eggs)
+</code></pre>
+
+<h2 id="retrieving-producers-products-locally">Retrieving Producers &amp; Products locally</h2>
+<pre><code class="python"># The database copys the items when they are stored/loaded
+_basf_copy = ldb.get_producer(pub_key=basf.pub_key)
+_grain_copy = ldb.get_product(pub_key=grain.pub_key)
+
+assert _basf_copy.is_valid()
+assert _grain_copy.is_valid()
+
+assert basf.__dict__ == _basf_copy.__dict__
+assert grain.__dict__  == _grain_copy.__dict__
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../reference/producer_and_product/" class="btn btn-neutral float-right" title="Producer and Product">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href=".." class="btn btn-neutral" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../reference/producer_and_product/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../js/theme.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+</body>
+</html>
