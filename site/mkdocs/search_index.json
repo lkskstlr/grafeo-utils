@@ -1,0 +1,59 @@
+{
+    "docs": [
+        {
+            "location": "/", 
+            "text": "Grafeo Python Utils\n\n\nGrafeo is a cryptograhpically secured and authenticated database for supply chains. This repo includes python utils to use the underlying protocol.", 
+            "title": "Home"
+        }, 
+        {
+            "location": "/#grafeo-python-utils", 
+            "text": "Grafeo is a cryptograhpically secured and authenticated database for supply chains. This repo includes python utils to use the underlying protocol.", 
+            "title": "Grafeo Python Utils"
+        }, 
+        {
+            "location": "/short_tutorial/", 
+            "text": "Quick Tutorial\n\n\nThis tutorial will show you the basics of using the grafeo utils.\nWe first create a bunch of producers and products and post them to a remote database.\n\n\nCreation\n\n\nimport grafeo\n\n\n# Connect to a remote database, i.e. a database which uses the specific http based protocol\n# Here we use a locally running django dev server\ndb = grafeo.RemoteDB(url='http://localhost:8000')\n\n# Generate producers\n# Those contain the private keys and are already signed\nbasf = grafeo.Producer(name=\nBASF\n)\ngrain_farmer = grafeo.Producer(name=\nGrain Farmer\n)\nfeed_producer = grafeo.Producer(name=\nChicken Feed Producer\n)\nchicken_farmer = grafeo.Producer(name=\nChicken Farmer\n)\nnoodle_producer = grafeo.Producer(name=\nNoodle Producer\n)\n\n# Post all to database\n# If True is returned, the post request was successful\nassert db.post(basf)\nassert db.post(grain_farmer)\nassert db.post(feed_producer)\nassert db.post(chicken_farmer)\nassert db.post(noodle_producer)\n\n\n# Generate Products\n\n# Produced by BASF\nvitamins = grafeo.Product(\n    name=\nVitamins\n,\n    producer_pub_key=basf.pub_key\n)\n# The producer has to also sign the product\n# No inputs were used\nvitamins.sign(\n    producer_priv_key=basf.priv_key,\n    input_priv_keys=[]\n)\n\n# Product by the grain farmer\ngrain = grafeo.Product(\n    name=\nGrain\n,\n    producer_pub_key=grain_farmer.pub_key\n)\ngrain.sign(\n    producer_priv_key=grain_farmer.priv_key,\n    input_priv_keys=[]\n)\n\n# Product by the feed producer. Uses vitamins and grains\n# Here we use inputs\nchicken_feed = grafeo.Product(\n    name=\nChicken Feed\n,\n    producer_pub_key=feed_producer.pub_key,\n    input_pub_keys=[\n        vitamins.pub_key,\n        grain.pub_key\n    ]\n)\n# Producer, and inputs have to sign\nchicken_feed.sign(\n    producer_priv_key=feed_producer.priv_key,\n    input_priv_keys=[\n        vitamins.priv_key,\n        grain.priv_key\n    ]\n)\n\n# Can be done with helper (signing is included)\neggs = grafeo.new_product(\n    name=\nEggs\n,\n    producer=chicken_farmer,\n    inputs=[chicken_feed]\n)\n\n\n# Post all to database\nassert db.post(vitamins)\nassert db.post(grain)\nassert db.post(chicken_feed)\nassert db.post(eggs)\n\n\n# The following is even shorter\nassert db.post_product(\n    name=\nEgg Noodles\n,\n    producer=noodle_producer,\n    inputs=[eggs]\n)\n\n\n\n\nRequesting the information for a Producer \n Product\n\n\nAll information about a producer defined by the public key can be accessed as follows:\n\n\n_producer = db.get_producer(pub_key=basf.pub_key)\n_product = db.get_product(pub_key=vitamins.pub_key)\n\nassert _producer.is_valid()\nassert _product.is_valid()\n\n\n\n\nSaving Producers \n Products locally\n\n\nThe \nLocalDB\n class allows saving producers \n products locally. This includes their \nprivate keys\n and thus the resulting file must be kept \nsecret\n!\nAlso the implementation is currently \nnot at all\n thread safe. Use the database from one, and only one, program at a time!\n\n\n# Local Database (describe folder to store data in. This must be a secure location!)\nldb = grafeo.LocalDB(folderpath=\n/Users/lukas\n)\n\nassert ldb.post(basf)\nassert ldb.post(grain_farmer)\nassert ldb.post(feed_producer)\nassert ldb.post(chicken_farmer)\nassert ldb.post(noodle_producer)\n\nassert ldb.post(vitamins)\nassert ldb.post(grain)\nassert ldb.post(chicken_feed)\nassert ldb.post(eggs)\nassert ldb.post(eggs)\n\n\n\n\nRetrieving Producers \n Products locally\n\n\n# The database copys the items when they are stored/loaded\n_basf_copy = ldb.get_producer(pub_key=basf.pub_key)\n_grain_copy = ldb.get_product(pub_key=grain.pub_key)\n\nassert _basf_copy.is_valid()\nassert _grain_copy.is_valid()\n\nassert basf.__dict__ == _basf_copy.__dict__\nassert grain.__dict__  == _grain_copy.__dict__", 
+            "title": "Tutorial"
+        }, 
+        {
+            "location": "/short_tutorial/#quick-tutorial", 
+            "text": "This tutorial will show you the basics of using the grafeo utils.\nWe first create a bunch of producers and products and post them to a remote database.", 
+            "title": "Quick Tutorial"
+        }, 
+        {
+            "location": "/short_tutorial/#creation", 
+            "text": "import grafeo\n\n\n# Connect to a remote database, i.e. a database which uses the specific http based protocol\n# Here we use a locally running django dev server\ndb = grafeo.RemoteDB(url='http://localhost:8000')\n\n# Generate producers\n# Those contain the private keys and are already signed\nbasf = grafeo.Producer(name= BASF )\ngrain_farmer = grafeo.Producer(name= Grain Farmer )\nfeed_producer = grafeo.Producer(name= Chicken Feed Producer )\nchicken_farmer = grafeo.Producer(name= Chicken Farmer )\nnoodle_producer = grafeo.Producer(name= Noodle Producer )\n\n# Post all to database\n# If True is returned, the post request was successful\nassert db.post(basf)\nassert db.post(grain_farmer)\nassert db.post(feed_producer)\nassert db.post(chicken_farmer)\nassert db.post(noodle_producer)\n\n\n# Generate Products\n\n# Produced by BASF\nvitamins = grafeo.Product(\n    name= Vitamins ,\n    producer_pub_key=basf.pub_key\n)\n# The producer has to also sign the product\n# No inputs were used\nvitamins.sign(\n    producer_priv_key=basf.priv_key,\n    input_priv_keys=[]\n)\n\n# Product by the grain farmer\ngrain = grafeo.Product(\n    name= Grain ,\n    producer_pub_key=grain_farmer.pub_key\n)\ngrain.sign(\n    producer_priv_key=grain_farmer.priv_key,\n    input_priv_keys=[]\n)\n\n# Product by the feed producer. Uses vitamins and grains\n# Here we use inputs\nchicken_feed = grafeo.Product(\n    name= Chicken Feed ,\n    producer_pub_key=feed_producer.pub_key,\n    input_pub_keys=[\n        vitamins.pub_key,\n        grain.pub_key\n    ]\n)\n# Producer, and inputs have to sign\nchicken_feed.sign(\n    producer_priv_key=feed_producer.priv_key,\n    input_priv_keys=[\n        vitamins.priv_key,\n        grain.priv_key\n    ]\n)\n\n# Can be done with helper (signing is included)\neggs = grafeo.new_product(\n    name= Eggs ,\n    producer=chicken_farmer,\n    inputs=[chicken_feed]\n)\n\n\n# Post all to database\nassert db.post(vitamins)\nassert db.post(grain)\nassert db.post(chicken_feed)\nassert db.post(eggs)\n\n\n# The following is even shorter\nassert db.post_product(\n    name= Egg Noodles ,\n    producer=noodle_producer,\n    inputs=[eggs]\n)", 
+            "title": "Creation"
+        }, 
+        {
+            "location": "/short_tutorial/#requesting-the-information-for-a-producer-product", 
+            "text": "All information about a producer defined by the public key can be accessed as follows:  _producer = db.get_producer(pub_key=basf.pub_key)\n_product = db.get_product(pub_key=vitamins.pub_key)\n\nassert _producer.is_valid()\nassert _product.is_valid()", 
+            "title": "Requesting the information for a Producer &amp; Product"
+        }, 
+        {
+            "location": "/short_tutorial/#saving-producers-products-locally", 
+            "text": "The  LocalDB  class allows saving producers   products locally. This includes their  private keys  and thus the resulting file must be kept  secret !\nAlso the implementation is currently  not at all  thread safe. Use the database from one, and only one, program at a time!  # Local Database (describe folder to store data in. This must be a secure location!)\nldb = grafeo.LocalDB(folderpath= /Users/lukas )\n\nassert ldb.post(basf)\nassert ldb.post(grain_farmer)\nassert ldb.post(feed_producer)\nassert ldb.post(chicken_farmer)\nassert ldb.post(noodle_producer)\n\nassert ldb.post(vitamins)\nassert ldb.post(grain)\nassert ldb.post(chicken_feed)\nassert ldb.post(eggs)\nassert ldb.post(eggs)", 
+            "title": "Saving Producers &amp; Products locally"
+        }, 
+        {
+            "location": "/short_tutorial/#retrieving-producers-products-locally", 
+            "text": "# The database copys the items when they are stored/loaded\n_basf_copy = ldb.get_producer(pub_key=basf.pub_key)\n_grain_copy = ldb.get_product(pub_key=grain.pub_key)\n\nassert _basf_copy.is_valid()\nassert _grain_copy.is_valid()\n\nassert basf.__dict__ == _basf_copy.__dict__\nassert grain.__dict__  == _grain_copy.__dict__", 
+            "title": "Retrieving Producers &amp; Products locally"
+        }, 
+        {
+            "location": "/reference/producer_and_product/", 
+            "text": "Producer and Product\n\n\nBase Class\n\n\nimport abc", 
+            "title": "Producer and Product"
+        }, 
+        {
+            "location": "/reference/producer_and_product/#producer-and-product", 
+            "text": "", 
+            "title": "Producer and Product"
+        }, 
+        {
+            "location": "/reference/producer_and_product/#base-class", 
+            "text": "import abc", 
+            "title": "Base Class"
+        }
+    ]
+}

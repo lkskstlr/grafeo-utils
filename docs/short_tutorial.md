@@ -5,7 +5,7 @@ We first create a bunch of producers and products and post them to a remote data
 
 ## Creation
 ```python
-import grafeo2 as grafeo
+import grafeo
 
 
 # Connect to a remote database, i.e. a database which uses the specific http based protocol
