@@ -1,4 +1,5 @@
-import grafeo2 as grafeo
+import grafeo
+
 
 # Establish connection to remote database which is a django dev. server in this case
 db = grafeo.RemoteDB(url='http://localhost:8000')

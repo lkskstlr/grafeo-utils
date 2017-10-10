@@ -1,4 +1,4 @@
-import grafeo2 as grafeo
+import grafeo
 from timeit import default_timer as timer
 
 
