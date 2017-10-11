@@ -1,5 +1,7 @@
 # Grafeo Utils
 
+[![pypi-version]][pypi]
+
 **Cryptographically authenticated supply chain storage protocol.**
 
 Full documentation for the project is available [here](https://lkskstlr.github.io/grafeo-utils/).
@@ -27,3 +29,6 @@ Install using `pip`...
 ```bash
 pip install grafeo
 ```
+
+[pypi-version]: https://img.shields.io/pypi/v/grafeo.svg
+[pypi]: https://pypi.python.org/pypi/grafeo
