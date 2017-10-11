@@ -2,6 +2,8 @@
 
 [![build-status-image]][travis]
 [![pypi-version]][pypi]
+[![coverage-status]][coveralls]
+
 
 **This is work in progress and right now not even in alpha. The implementation is most likely not cryptographically sound. Do not use this within any production system. Any help is appreciated, just reach out via github issues :)**
 
@@ -43,3 +45,6 @@ pip install grafeo
 
 [pypi-version]: https://img.shields.io/pypi/v/grafeo.svg
 [pypi]: https://pypi.python.org/pypi/grafeo
+
+[coverage-status]: https://coveralls.io/repos/github/lkskstlr/grafeo-utils/badge.svg?branch=master
+[coveralls]: https://coveralls.io/github/lkskstlr/grafeo-utils?branch=maste
