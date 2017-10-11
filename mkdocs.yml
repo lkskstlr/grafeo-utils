@@ -13,7 +13,7 @@ markdown_extensions:
 
 
 pages:
-- Home: index.md
+- Home: 'index.md'
 - Tutorial: 'short_tutorial.md'
 - Reference:
   - 'Producer and Product': 'reference/producer_and_product.md'
