@@ -6,3 +6,5 @@
 build
 dist
 grafeo/__pycache__
+site/*
+site

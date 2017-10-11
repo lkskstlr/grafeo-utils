@@ -52,7 +52,24 @@
     <a class="current" href=".">Home</a>
     <ul class="subnav">
             
-    <li class="toctree-l2"><a href="#grafeo-python-utils">Grafeo Python Utils</a></li>
+    <li class="toctree-l2"><a href="#grafeo-utils">Grafeo Utils</a></li>
+    
+
+    <li class="toctree-l2"><a href="#overview">Overview</a></li>
+    
+
+    <li class="toctree-l2"><a href="#requirements">Requirements</a></li>
+    
+
+    <li class="toctree-l2"><a href="#installation">Installation</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#installing-zbar">Installing zbar</a></li>
+        
+            <li><a class="toctree-l3" href="#installing-grafeo">Installing grafeo</a></li>
+        
+        </ul>
     
 
     </ul>
@@ -106,9 +123,50 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="grafeo-python-utils">Grafeo Python Utils</h1>
-<p><strong>This project as well as this documentation are work in progress. The implementation is most likely not cryptographically sound. Do not use this within any production system. Any help is appreciated, just reach out via github issues :)</strong></p>
-<p>Grafeo is a cryptograhpically secured and authenticated database for supply chains. This repo includes python utils to use the underlying protocol.</p>
+                <h1 id="grafeo-utils">Grafeo Utils</h1>
+<table>
+<thead>
+<tr>
+<th>Banner</th>
+<th>Link</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img alt="travis-banner" src="https://travis-ci.org/lkskstlr/grafeo-utils.svg?branch=master" /></td>
+<td><a href="https://travis-ci.org/lkskstlr/grafeo-utils?branch=master">travis</a></td>
+</tr>
+<tr>
+<td><img alt="pypi-banner" src="https://img.shields.io/pypi/v/grafeo.svg" /></td>
+<td><a href="https://pypi.python.org/pypi/grafeo">pypi</a></td>
+</tr>
+</tbody>
+</table>
+<p><strong>This is work in progress and right now not even in alpha. The implementation is most likely not cryptographically sound. Do not use this within any production system. Any help is appreciated, just reach out via github issues :)</strong></p>
+<p><strong>Cryptographically authenticated supply chain storage protocol.</strong></p>
+<hr />
+<h1 id="overview">Overview</h1>
+<p>Grafeo is a cryptographic protocol to insure supply chain information authenticity. It works for distributed and centralized databases and does not require trust in any central organization.</p>
+<p>This repository contains python utils to interface said protocol without hustle.</p>
+<h1 id="requirements">Requirements</h1>
+<ul>
+<li>Python (3.6)</li>
+<li><a href="https://github.com/pyca/pynacl">nacl</a> </li>
+<li><a href="https://github.com/requests/requests">requests</a></li>
+<li><a href="https://github.com/Polyconseil/zbarlight">zbarlight</a></li>
+</ul>
+<h1 id="installation">Installation</h1>
+<h2 id="installing-zbar">Installing zbar</h2>
+<p>For qrcode reading this library depends on <a href="https://github.com/Polyconseil/zbarlight">zbarlight</a> which is a thin wrapper around <a href="http://zbar.sourceforge.net">zbar</a>. Zbar has to be install on your system first:</p>
+<ul>
+<li>Debian: <code>sudo apt-get install libzbar0 libzbar-dev</code></li>
+<li>OS X (homebrew): <code>brew install zbar</code></li>
+<li>Other: <a href="https://github.com/Polyconseil/zbarlight#installation">instructions</a></li>
+</ul>
+<h2 id="installing-grafeo">Installing grafeo</h2>
+<p>Install using <code>pip</code>:</p>
+<pre><code class="bash">pip install grafeo
+</code></pre>
               
             </div>
           </div>
@@ -156,5 +214,5 @@
 
 <!--
 MkDocs version : 0.16.3
-Build Date UTC : 2017-10-11 14:09:00
+Build Date UTC : 2017-10-11 17:58:49
 -->
