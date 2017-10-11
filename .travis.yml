@@ -11,12 +11,17 @@ sudo: required
 before_install:
   - sudo apt-get update
   - sudo apt-get install -y libzbar0 libzbar-dev
+  - pip install pytest pytest-cov
+  - pip install coveralls
 
 install:
   - pip install .
 
 script:
   - pytest
+
+after_success:
+    - coveralls
 
 branches:
   only:
