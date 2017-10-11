@@ -1,14 +1,13 @@
 # Grafeo Utils
-
-[![build-status-image]][travis]
-[![pypi-version]][pypi]
+| Banner | Link |
+| ------ | ----- |
+| ![travis-banner](https://travis-ci.org/lkskstlr/grafeo-utils.svg?branch=master) | [travis](https://travis-ci.org/lkskstlr/grafeo-utils?branch=master) |
+| ![pypi-banner](https://img.shields.io/pypi/v/grafeo.svg) | [pypi](https://pypi.python.org/pypi/grafeo) |
 
 **This is work in progress and right now not even in alpha. The implementation is most likely not cryptographically sound. Do not use this within any production system. Any help is appreciated, just reach out via github issues :)**
 
 
 **Cryptographically authenticated supply chain storage protocol.**
-
-Full documentation for the project is available [here](https://lkskstlr.github.io/grafeo-utils/).
 
 ---
 
@@ -33,13 +32,7 @@ For qrcode reading this library depends on [zbarlight](https://github.com/Polyco
 * Other: [instructions](https://github.com/Polyconseil/zbarlight#installation)
 
 ## Installing grafeo
-Install using `pip`...
+Install using `pip`:
 ```bash
 pip install grafeo
 ```
-
-[build-status-image]: https://travis-ci.org/lkskstlr/grafeo-utils.svg?branch=master
-[travis]: https://travis-ci.org/lkskstlr/grafeo-utils?branch=master
-
-[pypi-version]: https://img.shields.io/pypi/v/grafeo.svg
-[pypi]: https://pypi.python.org/pypi/grafeo

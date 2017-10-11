@@ -33,7 +33,7 @@ For qrcode reading this library depends on [zbarlight](https://github.com/Polyco
 * Other: [instructions](https://github.com/Polyconseil/zbarlight#installation)
 
 ## Installing grafeo
-Install using `pip`...
+Install using `pip`
 ```bash
 pip install grafeo
 ```
