@@ -10,7 +10,7 @@ sudo: required
 # This is needed for pip install zbarlight to work
 before_install:
   - sudo apt-get update
-  - sudo apt-get install -y libzbar-dev
+  - sudo apt-get install -y libzbar0 libzbar-dev
 
 install:
   - pip install .
