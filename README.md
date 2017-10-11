@@ -1,5 +1,6 @@
 # Grafeo Utils
 
+[![build-status-image]][travis]
 [![pypi-version]][pypi]
 
 **Cryptographically authenticated supply chain storage protocol.**
@@ -29,6 +30,9 @@ Install using `pip`...
 ```bash
 pip install grafeo
 ```
+
+[build-status-image]: https://travis-ci.org/lkskstlr/grafeo-utils.svg?branch=master
+[travis]: https://travis-ci.org/lkskstlr/grafeo-utils?branch=master
 
 [pypi-version]: https://img.shields.io/pypi/v/grafeo.svg
 [pypi]: https://pypi.python.org/pypi/grafeo
