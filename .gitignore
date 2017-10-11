@@ -9,3 +9,5 @@ grafeo/__pycache__
 grafeo/.coverage
 site/*
 site
+htmlcov/*
+grafeo/htmlcov/*
