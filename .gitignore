@@ -6,7 +6,6 @@
 build
 dist
 grafeo/__pycache__
-.coverage
 grafeo/.coverage
 site/*
 site
