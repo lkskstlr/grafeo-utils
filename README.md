@@ -1,8 +1,8 @@
-# [Grafeo Utils][docs]
+# Grafeo Utils
 
 **Cryptographically authenticated supply chain storage protocol.**
 
-Full documentation for the project is available at [https://lkskstlr.github.io/grafeo-utils/][docs].
+Full documentation for the project is available [here](https://lkskstlr.github.io/grafeo-utils/).
 
 ---
 
@@ -17,9 +17,13 @@ This repository contains python utils to interface said protocol without hustle.
 # Requirements
 
 * Python (3.6)
+* [nacl](https://github.com/pyca/pynacl) 
+* [requests](https://github.com/requests/requests)
+* [zbarlight](https://github.com/Polyconseil/zbarlight)
 
 # Installation
 
 Install using `pip`...
-
-    pip install grafeo
+```bash
+pip install grafeo
+```
