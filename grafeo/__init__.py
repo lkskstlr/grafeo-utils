@@ -16,6 +16,7 @@ import os
 import pickle
 import copy
 import pprint
+import atexit
 
 
 class BaseProd(object):
@@ -506,11 +507,17 @@ class LocalDB(BaseDB):
         else:
             self._data = pickle.load(open(self._filename, "rb" ))
 
-    def __del__(self):
-        pickle.dump(self._data, open(self._filename,"wb"))
+        atexit.register(self._exit)
+
+    def _exit(self):
+        print('local db is being destroyed ... ', end='')
+        pickle.dump(self._data, open(self._filename ,"wb"))
+        print('done')
 
     def _clean(self):
-        os.remove(self._filename)
+        if os.path.exists(self._filename):
+            os.remove(self._filename)
+
         self._data = {
                 'producers': {},
                 'products': {}
@@ -537,4 +544,10 @@ class LocalDB(BaseDB):
             return False
 
         return True
+
+    def producers(self):
+        return self._data['producers'].values()
+
+    def products(self):
+        return self._data['products'].values()
 

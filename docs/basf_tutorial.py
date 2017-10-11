@@ -90,6 +90,7 @@ assert db.post_product(
 
 # Local Database (describe folder to store data in. This must be a secure location!)
 ldb = grafeo.LocalDB(folderpath="/Users/lukas")
+ldb._clean()
 
 assert ldb.post(basf)
 assert ldb.post(grain_farmer)
