@@ -12,7 +12,8 @@ setup(
     install_requires=[
           'pynacl',
           'requests',
-          'zbarlight'
+          'zbarlight',
+          'pytest'
       ],
     keywords = [],
     classifiers = [],
