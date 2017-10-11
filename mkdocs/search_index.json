@@ -2,12 +2,12 @@
     "docs": [
         {
             "location": "/", 
-            "text": "Grafeo Python Utils\n\n\nGrafeo is a cryptograhpically secured and authenticated database for supply chains. This repo includes python utils to use the underlying protocol.", 
+            "text": "Grafeo Python Utils\n\n\nThis project as well as this documentation are work in progress. The implementation is most likely not cryptographically sound. Do not use this within any production system. Any help is appreciated, just reach out via github issues :)\n\n\nGrafeo is a cryptograhpically secured and authenticated database for supply chains. This repo includes python utils to use the underlying protocol.", 
             "title": "Home"
         }, 
         {
             "location": "/#grafeo-python-utils", 
-            "text": "Grafeo is a cryptograhpically secured and authenticated database for supply chains. This repo includes python utils to use the underlying protocol.", 
+            "text": "This project as well as this documentation are work in progress. The implementation is most likely not cryptographically sound. Do not use this within any production system. Any help is appreciated, just reach out via github issues :)  Grafeo is a cryptograhpically secured and authenticated database for supply chains. This repo includes python utils to use the underlying protocol.", 
             "title": "Grafeo Python Utils"
         }, 
         {
