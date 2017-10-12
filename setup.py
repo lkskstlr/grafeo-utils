@@ -3,7 +3,7 @@ from setuptools import setup
 setup(
     name="grafeo",
     packages=["grafeo"],
-    version="0.0.2",
+    version="0.0.3",
     description = 'grafeo: Cryptographically authenticated supply chain storage protocol',
     author = 'Lukas Koestlers',
     author_email = 'lkskstlr@gmail.com',
@@ -12,7 +12,6 @@ setup(
     install_requires=[
           'pynacl',
           'requests',
-          'pytest'
       ],
     keywords = [],
     classifiers = [],

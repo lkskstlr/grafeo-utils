@@ -4,6 +4,8 @@
 [![pypi-version]][pypi]
 [![coverage-status]][coveralls]
 
+_At the moment he code coverage banner is often wrong. Just click it to go to [coveralls.io](https://coveralls.io/github/lkskstlr/grafeo-utils?branch=maste) and see the real coverage._ 
+
 
 **This is work in progress and right now not even in alpha. The implementation is most likely not cryptographically sound. Do not use this within any production system. Any help is appreciated, just reach out via github issues :)**
 
