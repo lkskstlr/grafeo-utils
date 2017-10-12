@@ -2,9 +2,9 @@ import grafeo
 from timeit import default_timer as timer
 
 
-db = grafeo.RemoteDB(url='http://localhost:8000')
+db = grafeo.RemoteDB(url='https://grafeo-server.herokuapp.com')
 
-num_samples = 100
+num_samples = 10
 
 _p = grafeo.Producer(name="Test Producer Timing")
 db.post(_p)
@@ -12,6 +12,7 @@ print(_p.is_valid())
 
 start = timer()
 for i in range(num_samples):
+    print(i)
     _pp = db.get_producer(pub_key=_p.pub_key)
 end = timer()
 print("Producers (GET): {} per second".format(num_samples / (end-start)))

@@ -2,7 +2,7 @@
     "docs": [
         {
             "location": "/", 
-            "text": "Grafeo Utils\n\n\n\n\n\n\n\n\nBanner\n\n\nLink\n\n\n\n\n\n\n\n\n\n\n\n\ntravis\n\n\n\n\n\n\n\n\npypi\n\n\n\n\n\n\n\n\nThis is work in progress and right now not even in alpha. The implementation is most likely not cryptographically sound. Do not use this within any production system. Any help is appreciated, just reach out via github issues :)\n\n\nCryptographically authenticated supply chain storage protocol.\n\n\n\n\nOverview\n\n\nGrafeo is a cryptographic protocol to insure supply chain information authenticity. It works for distributed and centralized databases and does not require trust in any central organization.\n\n\nThis repository contains python utils to interface said protocol without hustle.\n\n\nRequirements\n\n\n\n\nPython (3.6)\n\n\nnacl\n \n\n\nrequests\n\n\nzbarlight\n\n\n\n\nInstallation\n\n\nInstalling zbar\n\n\nFor qrcode reading this library depends on \nzbarlight\n which is a thin wrapper around \nzbar\n. Zbar has to be install on your system first:\n\n\n\n\nDebian: \nsudo apt-get install libzbar0 libzbar-dev\n\n\nOS X (homebrew): \nbrew install zbar\n\n\nOther: \ninstructions\n\n\n\n\nInstalling grafeo\n\n\nInstall using \npip\n:\n\n\npip install grafeo", 
+            "text": "Grafeo Utils\n\n\n\n\n\n\n\n\nBanner\n\n\nLink\n\n\n\n\n\n\n\n\n\n\n\n\ntravis\n\n\n\n\n\n\n\n\npypi\n\n\n\n\n\n\n\n\nThis is work in progress and right now not even in alpha. The implementation is most likely not cryptographically sound. Do not use this within any production system. Any help is appreciated, just reach out via github issues :)\n\n\nCryptographically authenticated supply chain storage protocol.\n\n\n\n\nOverview\n\n\nGrafeo is a cryptographic protocol to insure supply chain information authenticity. It works for distributed and centralized databases and does not require trust in any central organization.\n\n\nThis repository contains python utils to interface said protocol without hustle.\n\n\nRequirements\n\n\n\n\nPython (3.6)\n\n\nnacl\n \n\n\nrequests\n\n\n\n\nInstallation\n\n\nInstall using \npip\n:\n\n\npip install grafeo", 
             "title": "Home"
         }, 
         {
@@ -17,23 +17,13 @@
         }, 
         {
             "location": "/#requirements", 
-            "text": "Python (3.6)  nacl    requests  zbarlight", 
+            "text": "Python (3.6)  nacl    requests", 
             "title": "Requirements"
         }, 
         {
             "location": "/#installation", 
-            "text": "", 
-            "title": "Installation"
-        }, 
-        {
-            "location": "/#installing-zbar", 
-            "text": "For qrcode reading this library depends on  zbarlight  which is a thin wrapper around  zbar . Zbar has to be install on your system first:   Debian:  sudo apt-get install libzbar0 libzbar-dev  OS X (homebrew):  brew install zbar  Other:  instructions", 
-            "title": "Installing zbar"
-        }, 
-        {
-            "location": "/#installing-grafeo", 
             "text": "Install using  pip :  pip install grafeo", 
-            "title": "Installing grafeo"
+            "title": "Installation"
         }, 
         {
             "location": "/short_tutorial/", 
