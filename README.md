@@ -24,17 +24,8 @@ This repository contains python utils to interface said protocol without hustle.
 * Python (3.6)
 * [nacl](https://github.com/pyca/pynacl) 
 * [requests](https://github.com/requests/requests)
-* [zbarlight](https://github.com/Polyconseil/zbarlight)
 
 # Installation
-## Installing zbar
-For qrcode reading this library depends on [zbarlight](https://github.com/Polyconseil/zbarlight) which is a thin wrapper around [zbar](http://zbar.sourceforge.net). Zbar has to be install on your system first:
-
-* Debian: `sudo apt-get install libzbar0 libzbar-dev`
-* OS X (homebrew): `brew install zbar`
-* Other: [instructions](https://github.com/Polyconseil/zbarlight#installation)
-
-## Installing grafeo
 Install using `pip`
 ```bash
 pip install grafeo

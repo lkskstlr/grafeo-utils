@@ -3,13 +3,8 @@ language: python
 python:
   - "3.6"
 
-# Ubuntu Trusty with sudo enabled (to apt-get install zbar)
-dist: trusty
-sudo: required
-
-# This is needed for pip install zbarlight to work
+# Setup Test Environment
 before_install:
-  - sudo apt-get install -y libzbar0 libzbar-dev
   - pip install pytest pytest-cov
   - pip install coveralls
 
