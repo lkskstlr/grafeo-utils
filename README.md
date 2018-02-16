@@ -14,6 +14,7 @@ _At the moment he code coverage banner is often wrong. Just click it to go to [c
 
 Full documentation for the project is available [here](https://lkskstlr.github.io/grafeo-utils/).
 
+This code was written for and afterwards the 2017 Techfest at TUM. For various reasons this will not be developed further.
 ---
 
 # Overview
